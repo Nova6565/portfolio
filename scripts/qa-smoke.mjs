@@ -117,6 +117,20 @@ async function evaluate(expression) {
   return result.result.value;
 }
 
+async function clickElement(expression, message) {
+  const found = await evaluate(`(() => {
+    const element = ${expression};
+    if (!element) return null;
+    element.scrollIntoView({ block: "center", inline: "center" });
+    element.focus();
+    return true;
+  })()`);
+  assert(found, message);
+  await sleep(150);
+  await send("Input.dispatchKeyEvent", { type: "keyDown", key: "Enter", code: "Enter", windowsVirtualKeyCode: 13 });
+  await send("Input.dispatchKeyEvent", { type: "keyUp", key: "Enter", code: "Enter", windowsVirtualKeyCode: 13 });
+}
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -128,17 +142,43 @@ try {
   await navigate(`${baseUrl}/`, 1440, 1200);
   assert(await evaluate("document.title.includes('Mohamed Adel Mahmoud')"), "Homepage title missing.");
   assert(await evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Desktop homepage has horizontal overflow.");
+  assert(await evaluate("document.querySelector('.ambient-cursor[aria-hidden=\"true\"]') !== null"), "Ambient cursor layer missing.");
+  await send("Input.dispatchMouseEvent", { type: "mouseMoved", x: 960, y: 380 });
+  await sleep(500);
+  assert(
+    await evaluate("document.documentElement.hasAttribute('data-ambient-cursor')"),
+    "Ambient cursor did not enable on desktop fine-pointer viewport."
+  );
+  assert(
+    await evaluate("getComputedStyle(document.querySelector('.ambient-cursor')).display !== 'none'"),
+    "Ambient cursor layer is hidden on desktop fine-pointer viewport."
+  );
   assert(await evaluate("document.body.textContent.includes('PharmaSafe')"), "Homepage is missing PharmaSafe.");
+  assert(await evaluate("document.body.textContent.includes('VeggieVision')"), "Homepage is missing VeggieVision.");
+  assert(
+    await evaluate(
+      "Array.from(document.querySelectorAll('.project-media-image')).every((image) => image.getAttribute('alt') && getComputedStyle(image).objectFit === 'contain')"
+    ),
+    "One or more project media images is missing alt text or is not set to preserve proportions."
+  );
   assert(await evaluate("document.querySelector('a[href=\"/projects/pharmasafe#platform-demo\"]') !== null"), "Homepage demo CTA missing.");
-  assert(await evaluate("document.querySelectorAll('button[aria-label^=\"Open certificate image\"]').length === 12"), "Certificate gallery count is not 12.");
+  const certificateCount = await evaluate(
+    "Array.from(document.querySelectorAll('button')).filter((button) => button.getAttribute('aria-label')?.startsWith('Open certificate image')).length"
+  );
+  assert(certificateCount === 13, `Certificate gallery count is ${certificateCount}, not 13.`);
+  assert(await evaluate("document.body.textContent.includes('5-Day AI Agents Intensive Course with Google')"), "Google certificate is missing.");
   assert(await evaluate("document.querySelector('a[download][href=\"/assets/resume/CV_MohamedAdel.pdf\"]') !== null"), "Resume download link missing.");
+  await sleep(1200);
 
-  await evaluate("document.querySelector('button[aria-label^=\"Open certificate image\"]').click(); true");
+  await clickElement(
+    "Array.from(document.querySelectorAll('button')).find((button) => button.getAttribute('aria-label')?.startsWith('Open certificate image'))",
+    "Certificate preview button missing."
+  );
   await sleep(700);
   assert(await evaluate("document.querySelector('[role=\"dialog\"][aria-modal=\"true\"]') !== null"), "Certificate modal did not open.");
-  assert(await evaluate("document.activeElement?.getAttribute('aria-label') === 'Close certificate preview'"), "Certificate modal did not move focus to close control.");
+  assert(await evaluate("document.activeElement?.getAttribute('aria-label') === 'Close image preview'"), "Certificate modal did not move focus to close control.");
   await evaluate(`
-    document.querySelector('[data-certificate-modal]').dispatchEvent(
+    window.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'Escape',
         code: 'Escape',
@@ -153,11 +193,40 @@ try {
   `);
   await sleep(700);
   assert(await evaluate("document.querySelector('[role=\"dialog\"]') === null"), "Certificate modal did not close with Escape.");
+  assert(
+    await evaluate("document.activeElement?.getAttribute('aria-label')?.startsWith('Open certificate image')"),
+    "Certificate modal did not restore focus to the trigger."
+  );
+
+  assert(await evaluate("document.querySelector('button[aria-label=\"Open image preview for VeggieVision\"]') !== null"), "VeggieVision project preview button missing.");
+  await clickElement(
+    'document.querySelector(\'button[aria-label="Open image preview for VeggieVision"]\')',
+    "VeggieVision project preview button missing."
+  );
+  await sleep(700);
+  assert(await evaluate("document.querySelector('[role=\"dialog\"][aria-modal=\"true\"]') !== null"), "Project image modal did not open.");
+  assert(await evaluate("document.body.textContent.includes('Supplied VeggieVision mobile app screenshots')"), "Project image modal caption missing.");
+  await clickElement('document.querySelector(\'button[aria-label="Close image preview"]\')', "Project image modal close button missing.");
+  await sleep(700);
+  assert(await evaluate("document.querySelector('[role=\"dialog\"]') === null"), "Project image modal did not close.");
+  await clickElement(
+    'document.querySelector(\'button[aria-label="Open image preview for VeggieVision"]\')',
+    "VeggieVision project preview button missing."
+  );
+  await sleep(700);
+  await evaluate(`
+    document.querySelector('[data-media-lightbox]')?.dispatchEvent(
+      new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window })
+    );
+    true
+  `);
+  await sleep(700);
+  assert(await evaluate("document.querySelector('[role=\"dialog\"]') === null"), "Project image modal did not close from outside click.");
 
   await navigate(`${baseUrl}/`, 390, 1200);
   assert(await evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Mobile homepage has horizontal overflow.");
   assert(await evaluate("document.querySelector('button[aria-label=\"Open menu\"]') !== null"), "Mobile menu button missing.");
-  await evaluate("document.querySelector('button[aria-label=\"Open menu\"]').click(); true");
+  await clickElement('document.querySelector(\'button[aria-label="Open menu"]\')', "Mobile menu button missing.");
   await sleep(250);
   assert(await evaluate("document.querySelector('button[aria-label=\"Close menu\"]') !== null"), "Mobile menu did not open.");
 
@@ -165,9 +234,19 @@ try {
     features: [{ name: "prefers-reduced-motion", value: "reduce" }]
   });
   assert(await evaluate("window.matchMedia('(prefers-reduced-motion: reduce)').matches"), "Reduced-motion media emulation failed.");
+  assert(
+    await evaluate("getComputedStyle(document.querySelector('.ambient-cursor')).display === 'none'"),
+    "Ambient cursor is not disabled for reduced motion."
+  );
 
   await navigate(`${baseUrl}/projects/pharmasafe`, 390, 1300);
   assert(await evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Mobile PharmaSafe page has horizontal overflow.");
+  assert(
+    await evaluate(
+      "Array.from(document.querySelectorAll('.project-media-image')).every((image) => image.getAttribute('alt') && getComputedStyle(image).objectFit === 'contain')"
+    ),
+    "One or more mobile case-study images is missing alt text or is not set to preserve proportions."
+  );
   assert(await evaluate("document.body.textContent.includes('Metrics and Evaluation')"), "Metrics and Evaluation section missing.");
   assert(await evaluate("document.body.textContent.includes('System Architecture')"), "System Architecture section missing.");
   assert(await evaluate("document.querySelector('video source[src$=\"pharmasafe-platform-demo-2026-06-25.mp4\"]') !== null"), "PharmaSafe demo video source missing.");

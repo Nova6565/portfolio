@@ -57,7 +57,7 @@ public/assets/
 
 Portfolio facts live in `data/`. Source handoff documents remain in the project root, and original files remain under `assets/`.
 
-Website-ready copies live under `public/assets/`. Certificates are data-driven in `data/certifications.ts`; every certificate image opens in an accessible modal/lightbox. Project content and metrics are managed in `data/projects.ts`.
+Website-ready copies live under `public/assets/`. Certificates are data-driven in `data/certifications.ts`; every certificate image opens in an accessible modal/lightbox. Project content and metrics are managed in `data/projects.ts`, and every selected project image opens in the same accessible preview.
 
 PharmaSafe application screenshots and the demo video live under `public/assets/projects/pharmasafe/demo-screenshots/`. Public copies were renamed descriptively from the timestamped source screenshots after visual inspection.
 
@@ -79,4 +79,4 @@ The AI portfolio chatbot is intentionally not implemented in this version. The s
 
 ## Current Asset Gaps
 
-No verified Brain Tumor or Malware Analysis screenshots were supplied, so those project cards use clearly editorial visual treatments rather than fake interfaces. No public Malware Analysis repository URL was supplied, so that card intentionally omits a GitHub button.
+Verified real project visuals are present for PharmaSafe, Intelligent Malware Analysis, Brain Tumor Detection, RAG Document Q&A, Disaster Damage Assessment, and VeggieVision. No public Malware Analysis repository URL was supplied, so that card intentionally omits a GitHub button.

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { ArrowLeft, ArrowUpRight, FileText, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, FileText, Github, Maximize2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navigation } from "@/components/layout/Navigation";
 import { Reveal } from "@/components/motion/Reveal";
+import { MediaLightboxTrigger } from "@/components/ui/MediaLightbox";
 import { Metric } from "@/components/ui/Metric";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TechTag } from "@/components/ui/TechTag";
@@ -48,7 +49,7 @@ const sections: CaseSection[] = [
     title: "Drug-drug interaction engine",
     screenshotId: "pharmacist-ddi-findings",
     copy:
-      "The DDI system combines structured DrugBank/Neo4j and DDInter evidence with a PubMedBERT fallback for interaction analysis when structured data is insufficient."
+      "DrugBank is PharmaSafe's primary and most important data source: the core medication knowledge source behind drug information and interaction evidence. DDInter supplements the interaction dataset, while PubMedBERT is used as a fallback when structured evidence is insufficient."
   },
   {
     title: "Patient-aware drug substitution",
@@ -92,9 +93,9 @@ function Architecture() {
     "Substitution Engine",
     "Static Digital Twin",
     "OCR",
-    "DrugBank / Neo4j",
-    "DDInter",
-    "PubMedBERT",
+    "DrugBank / Neo4j primary knowledge source",
+    "DDInter supplementary interactions",
+    "PubMedBERT fallback model",
     "Supporting Services"
   ];
 
@@ -174,15 +175,30 @@ export default function PharmaSafePage() {
             </Reveal>
 
             <Reveal className="overflow-hidden rounded-sm border border-walnut/15 bg-espresso p-3 shadow-editorial">
-              <Image
-                src={pharmasafe.image!.src}
-                alt={pharmasafe.image!.alt}
-                width={pharmasafe.image!.width}
-                height={pharmasafe.image!.height}
-                priority
-                sizes="(min-width: 1024px) 54vw, 100vw"
-                className="aspect-[1.23/1] w-full rounded-sm object-contain"
-              />
+              <MediaLightboxTrigger
+                media={{
+                  title: "PharmaSafe Medicine Safety Check",
+                  eyebrow: "Case study hero",
+                  caption: pharmasafe.image!.caption,
+                  image: pharmasafe.image!
+                }}
+                className="project-media-button block w-full overflow-hidden rounded-sm"
+              >
+                <span className="relative block">
+                  <Image
+                    src={pharmasafe.image!.src}
+                    alt={pharmasafe.image!.alt}
+                    width={pharmasafe.image!.width}
+                    height={pharmasafe.image!.height}
+                    priority
+                    sizes="(min-width: 1024px) 54vw, 100vw"
+                    className="project-media-image aspect-[1.23/1] w-full rounded-sm object-contain"
+                  />
+                  <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-espresso/88 text-ivory">
+                    <Maximize2 size={16} />
+                  </span>
+                </span>
+              </MediaLightboxTrigger>
             </Reveal>
           </div>
         </section>
@@ -231,14 +247,29 @@ export default function PharmaSafePage() {
                 >
                   <figure className="overflow-hidden rounded-sm border border-walnut/15 bg-ivory/75 shadow-line">
                     <div className="bg-espresso p-2">
-                      <Image
-                        src={screenshot.src}
-                        alt={screenshot.alt}
-                        width={screenshot.width}
-                        height={screenshot.height}
-                        sizes={index === 0 || index === 1 ? "100vw" : "(min-width: 768px) 48vw, 100vw"}
-                        className="h-auto w-full rounded-sm object-contain"
-                      />
+                      <MediaLightboxTrigger
+                        media={{
+                          title: screenshot.title,
+                          eyebrow: screenshot.feature,
+                          caption: screenshot.description,
+                          image: screenshot
+                        }}
+                        className="project-media-button block w-full overflow-hidden rounded-sm"
+                      >
+                        <span className="relative block">
+                          <Image
+                            src={screenshot.src}
+                            alt={screenshot.alt}
+                            width={screenshot.width}
+                            height={screenshot.height}
+                            sizes={index === 0 || index === 1 ? "100vw" : "(min-width: 768px) 48vw, 100vw"}
+                            className="project-media-image h-auto w-full rounded-sm object-contain"
+                          />
+                          <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-espresso/88 text-ivory">
+                            <Maximize2 size={16} />
+                          </span>
+                        </span>
+                      </MediaLightboxTrigger>
                     </div>
                     <figcaption className="p-5">
                       <p className="text-xs font-bold uppercase tracking-[0.22em] text-brass">{screenshot.feature}</p>
@@ -292,14 +323,29 @@ export default function PharmaSafePage() {
                             if (!screenshot) return null;
                             return (
                               <>
-                                <Image
-                                  src={screenshot.src}
-                                  alt={screenshot.alt}
-                                  width={screenshot.width}
-                                  height={screenshot.height}
-                                  sizes="(min-width: 1280px) 42vw, 100vw"
-                                  className="h-auto w-full rounded-sm object-contain"
-                                />
+                                <MediaLightboxTrigger
+                                  media={{
+                                    title: screenshot.title,
+                                    eyebrow: screenshot.feature,
+                                    caption: screenshot.description,
+                                    image: screenshot
+                                  }}
+                                  className="project-media-button block w-full overflow-hidden rounded-sm"
+                                >
+                                  <span className="relative block">
+                                    <Image
+                                      src={screenshot.src}
+                                      alt={screenshot.alt}
+                                      width={screenshot.width}
+                                      height={screenshot.height}
+                                      sizes="(min-width: 1280px) 42vw, 100vw"
+                                      className="project-media-image h-auto w-full rounded-sm object-contain"
+                                    />
+                                    <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-espresso/88 text-ivory">
+                                      <Maximize2 size={16} />
+                                    </span>
+                                  </span>
+                                </MediaLightboxTrigger>
                                 <figcaption className="px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-ivory/70">
                                   {screenshot.feature}
                                 </figcaption>
@@ -331,14 +377,29 @@ export default function PharmaSafePage() {
                   className={index === 1 ? "md:col-span-2" : undefined}
                 >
                   <div className="overflow-hidden rounded-sm border border-walnut/15 bg-espresso p-2 shadow-line">
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      width={image.width}
-                      height={image.height}
-                      sizes={index === 1 ? "100vw" : "(min-width: 768px) 48vw, 100vw"}
-                      className="aspect-video w-full rounded-sm object-cover"
-                    />
+                    <MediaLightboxTrigger
+                      media={{
+                        title: image.alt,
+                        eyebrow: "OCR evidence",
+                        caption: "Genuine PharmaSafe OCR presentation slide supplied with the project assets.",
+                        image
+                      }}
+                      className="project-media-button block w-full overflow-hidden rounded-sm"
+                    >
+                      <span className="relative block">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={image.width}
+                          height={image.height}
+                          sizes={index === 1 ? "100vw" : "(min-width: 768px) 48vw, 100vw"}
+                          className="project-media-image aspect-video w-full rounded-sm object-contain"
+                        />
+                        <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-espresso/88 text-ivory">
+                          <Maximize2 size={16} />
+                        </span>
+                      </span>
+                    </MediaLightboxTrigger>
                   </div>
                 </Reveal>
               ))}

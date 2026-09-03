@@ -32,20 +32,21 @@ About direction:
 **Subtitle:** AI-Powered Medication Safety Platform  
 **Label:** A+ Graduation Project
 
-**Summary:** An end-to-end medication-safety platform combining drug-drug interaction analysis, patient-aware drug substitution, prescription OCR, patient-specific medication modeling, explainable safety reporting, web/mobile interfaces, and multiple medical data sources.
+**Summary:** An end-to-end medication-safety platform anchored by DrugBank as the primary medication knowledge source, with DDInter as supplementary interaction evidence and PubMedBERT as a fallback model for unresolved interaction analysis.
 
 **Technology:** Python, FastAPI, React, Flutter, Neo4j, DrugBank, DDInter, PubMedBERT, NLP, Groq LLMs, SHAP / Explainable AI.
 
 ### Core capabilities
 
-1. **Drug-drug interaction engine:** A hybrid DDI system using DrugBank/Neo4j and DDInter data, with a PubMedBERT fallback for interaction analysis.
+1. **Drug-drug interaction engine:** DrugBank is the primary and most important medication knowledge source behind drug information and interaction evidence. DDInter supplements the interaction dataset, and PubMedBERT is used as a fallback model when structured evidence is insufficient.
 2. **Drug substitution:** Filters and ranks potentially safer medication alternatives against the patient's current medication profile and available interaction evidence for pharmacist review.
 3. **Static digital twin:** Models the patient's current medication state, compares original and substituted medication regimens, and generates explainable safety reports.
 4. **Prescription OCR:** Converts handwritten medication information into structured fields through YOLO11n → TrOCR → domain-aware pharmaceutical-name correction.
 
 ### Validated metrics
 
-- DDInter records: 90,543
+- DrugBank role: primary source
+- DDInter supplementary records: 90,543
 - PubMedBERT fallback accuracy: 88.14%
 - PubMedBERT macro-F1: 85.63%
 - YOLO stage mAP@50: 0.7094
@@ -57,7 +58,7 @@ Repository: see `02_LINKS_AND_CONTACT.md`.
 
 ## Project 02 — Intelligent Malware Analysis Platform
 
-Cloud-based malware-risk analysis combining static machine-learning analysis, dynamic sandbox behavior, and VirusTotal hash verification.
+Cloud-based malware-risk analysis combining static machine-learning analysis, dynamic sandbox behavior, and VirusTotal hash verification. Achieved Top 50 in the Huawei Cloud MENA Competition.
 
 - Dataset: EMBER2024
 - Model: XGBoost
@@ -65,6 +66,7 @@ Cloud-based malware-risk analysis combining static machine-learning analysis, dy
 - Accuracy: 0.97
 - Cloud: Huawei Cloud
 - Services: ECS, OBS, VPC, Cloud Eye
+- Visual: genuine supplied architecture/project image
 - Public repository: not supplied; omit the GitHub button
 
 ## Project 03 — RAG Document Q&A Assistant
@@ -78,6 +80,7 @@ Source-grounded document question-answering system for PDF, DOCX, and TXT files.
 - Gradio
 - FastAPI
 - Focus: ingestion, retrieval, semantic search, grounding, and answer generation
+- Visual: genuine supplied PDF RAG Q&A screenshot
 
 Repository: see `02_LINKS_AND_CONTACT.md`.
 
@@ -90,10 +93,28 @@ MRI-based brain-tumor classifier.
 - Approximately 7,000 MRI images
 - 97% accuracy
 - Best Project — Introduction to Artificial Intelligence
+- Visual: genuine supplied Gradio application screenshot
 
 Repository: see `02_LINKS_AND_CONTACT.md`.
 
-## Project 05 — Disaster Damage Assessment from Satellite Images
+## Project 05 — VeggieVision
+
+AI-powered vegetable recognition, nutrition, and recipe assistant.
+
+- CNNs
+- EfficientNetB0
+- MobileNetV2
+- TFLite
+- Streamlit
+- Flutter
+- USDA data
+- Groq
+- Test accuracy: 99.9%
+- Best Project — Advanced Artificial Intelligence at AASTMT
+- Repository: https://github.com/Nova6565/VeggieVision
+- Visual: genuine supplied mobile app screenshots
+
+## Project 06 — Disaster Damage Assessment from Satellite Images
 
 AI pipeline assessing building damage after disasters from pre/post satellite imagery.
 
@@ -103,6 +124,7 @@ AI pipeline assessing building damage after disasters from pre/post satellite im
 - computer vision, segmentation, and classification
 - Accuracy: 78%
 - Macro-F1: 76%
+- Visual: genuine supplied prediction composite screenshot
 
 Repository: see `02_LINKS_AND_CONTACT.md`.
 
@@ -169,6 +191,7 @@ Git, GitHub, Gradio, and Streamlit.
 - Oracle Agentic AI Certified Foundations Associate
 - Digital Egypt Pioneers Program — Data Scientist
 - ALX Data Science
+- 5-Day AI Agents Intensive Course with Google — issued December 18, 2025
 
 ### Documented credentials without an image in this handoff
 
@@ -184,12 +207,13 @@ Text-only credential cards are acceptable when an image is absent. Never invent 
 - PharmaSafe — A+ Graduation Project
 - Huawei Developer Competition Northern Africa 2025 — Top 50 among 389 teams and 1,400+ developers
 - ECPC 2024 — Finalist
-- Four academic course project awards
-- Best Project — Introduction to Artificial Intelligence (Brain Tumor Detection)
+- Best Project — Introduction to Artificial Intelligence
+- Best Project — Advanced Artificial Intelligence
+- Best Project — Introduction to Cybersecurity
+- Best Project — Advanced Programming
 
 Additional awards may exist, but do not invent undocumented award titles.
 
 ## Public contact
 
 Use the exact values in `02_LINKS_AND_CONTACT.md`. Never show a phone number.
-

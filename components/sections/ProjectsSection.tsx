@@ -1,37 +1,12 @@
-import { ArrowUpRight, Github } from "lucide-react";
+"use client";
+
+import { ArrowUpRight, Github, Maximize2 } from "lucide-react";
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
+import { MediaLightboxTrigger } from "@/components/ui/MediaLightbox";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TechTag } from "@/components/ui/TechTag";
 import { projects } from "@/data/projects";
-
-function AbstractProjectMark({ id }: { id: string }) {
-  return (
-    <div className="relative min-h-72 overflow-hidden rounded-sm border border-walnut/15 bg-graphite text-ivory shadow-line">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(176,141,87,0.18),transparent_42%),linear-gradient(90deg,rgba(244,239,230,0.08)_1px,transparent_1px),linear-gradient(0deg,rgba(244,239,230,0.08)_1px,transparent_1px)] bg-[length:auto,44px_44px,44px_44px]" />
-      <div className="relative flex h-full min-h-72 flex-col justify-between p-7">
-        <p className="text-xs font-bold uppercase tracking-[0.22em] text-brass">
-          {id === "malware-analysis" ? "Risk analysis" : "Medical imaging"}
-        </p>
-        <div aria-hidden="true" className="grid grid-cols-5 gap-2">
-          {Array.from({ length: 20 }).map((_, index) => (
-            <span
-              key={index}
-              className={`h-10 border border-ivory/12 ${
-                (id === "malware-analysis" ? index % 4 === 0 : index === 7 || index === 12)
-                  ? "bg-brass/45"
-                  : "bg-ivory/5"
-              }`}
-            />
-          ))}
-        </div>
-        <p className="max-w-xs text-sm leading-6 text-ivory/72">
-          Abstract editorial treatment because no verified project screenshot was supplied.
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export function ProjectsSection() {
   const secondaryProjects = projects.slice(1);
@@ -41,8 +16,8 @@ export function ProjectsSection() {
       <div className="container-shell">
         <SectionHeading
           eyebrow="Selected Work"
-          title="Applied systems across security, retrieval, medical imaging, and disaster response."
-          copy="Only verified assets and supplied repositories are used. Where screenshots are unavailable, the presentation stays explicitly editorial."
+          title="Applied systems across security, retrieval, medical imaging, food AI, and disaster response."
+          copy="Only verified assets and supplied repositories are used. Each project image opens into an accessible evidence preview."
         />
         <div className="grid gap-8">
           {secondaryProjects.map((project, index) => (
@@ -53,19 +28,39 @@ export function ProjectsSection() {
             >
               <div>
                 {project.image ? (
-                  <div className="overflow-hidden rounded-sm border border-walnut/15 bg-parchment shadow-line">
-                    <Image
-                      src={project.image.src}
-                      alt={project.image.alt}
-                      width={project.image.width}
-                      height={project.image.height}
-                      sizes="(min-width: 1024px) 42vw, 100vw"
-                      className="aspect-[16/10] w-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <AbstractProjectMark id={project.id} />
-                )}
+                  <figure className="rounded-sm border border-walnut/15 bg-ivory/80 p-2 shadow-line">
+                    <MediaLightboxTrigger
+                      media={{
+                        title: project.title,
+                        eyebrow: project.subtitle,
+                        caption: project.image.caption,
+                        image: project.image
+                      }}
+                      className="project-media-button group/media block w-full overflow-hidden rounded-sm border border-walnut/15 bg-parchment text-left"
+                    >
+                      <span className="relative block p-2">
+                        <Image
+                          src={project.image.src}
+                          alt={project.image.alt}
+                          width={project.image.width}
+                          height={project.image.height}
+                          sizes="(min-width: 1024px) 42vw, 100vw"
+                          className="project-media-image aspect-[16/10] w-full object-contain"
+                        />
+                        <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-espresso/88 text-ivory">
+                          <Maximize2 size={16} />
+                        </span>
+                        <span className="absolute bottom-4 left-4 inline-flex max-w-[calc(100%-2rem)] items-center gap-2 bg-espresso/88 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-ivory backdrop-blur">
+                          <span className="project-media-title truncate">{project.title}</span>
+                          <ArrowUpRight size={14} className="project-media-icon shrink-0" />
+                        </span>
+                      </span>
+                    </MediaLightboxTrigger>
+                    {project.image.caption ? (
+                      <figcaption className="px-2 pt-3 text-xs leading-5 text-walnut">{project.image.caption}</figcaption>
+                    ) : null}
+                  </figure>
+                ) : null}
               </div>
               <div className="grid content-center gap-5">
                 <p className="serif text-5xl font-semibold text-brass">{project.number}</p>
@@ -76,6 +71,11 @@ export function ProjectsSection() {
                   </h3>
                 </div>
                 <p className="max-w-2xl text-pretty text-base leading-8 text-walnut">{project.summary}</p>
+                {project.label ? (
+                  <p className="w-fit border border-brass/45 bg-parchment/70 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-walnut">
+                    {project.label}
+                  </p>
+                ) : null}
                 <dl className="grid gap-3 sm:grid-cols-2">
                   {project.metrics.map((metric) => (
                     <div key={metric.label} className="border-l border-brass/45 pl-4">

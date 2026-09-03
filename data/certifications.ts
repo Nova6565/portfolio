@@ -12,6 +12,17 @@ export type Certification = {
 
 export const certifications: Certification[] = [
   {
+    title: "5-Day AI Agents Intensive Course with Google",
+    issuer: "Google / Kaggle",
+    detail: "Issued December 18, 2025",
+    image: {
+      src: "/assets/certificates/google-5-day-ai-agents-intensive-kaggle.png",
+      alt: "Google and Kaggle 5-Day AI Agents Intensive Course certificate awarded to Mohamed Adel Amin on December 18, 2025.",
+      width: 833,
+      height: 512
+    }
+  },
+  {
     title: "IBM AI Engineering Professional Certificate",
     issuer: "IBM / Coursera",
     image: {

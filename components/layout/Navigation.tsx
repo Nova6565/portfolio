@@ -110,6 +110,12 @@ export function Navigation() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setOpen((value) => !value);
+              }
+            }}
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>

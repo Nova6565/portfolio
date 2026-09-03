@@ -18,6 +18,7 @@ export type Project = {
   image?: {
     src: string;
     alt: string;
+    caption?: string;
     width: number;
     height: number;
   };
@@ -52,7 +53,8 @@ export type PharmaSafeAppScreenshot = {
 };
 
 export const pharmasafeMetrics: Metric[] = [
-  { label: "DDInter records", value: "90,543" },
+  { label: "DrugBank role", value: "Primary source" },
+  { label: "DDInter supplementary records", value: "90,543" },
   { label: "PubMedBERT fallback accuracy", value: "88.14%" },
   { label: "PubMedBERT macro-F1", value: "85.63%" },
   { label: "YOLO stage mAP@50", value: "0.7094" },
@@ -62,7 +64,8 @@ export const pharmasafeMetrics: Metric[] = [
 ];
 
 export const pharmasafeCapabilities = [
-  "Hybrid drug-drug interaction analysis using DrugBank/Neo4j, DDInter, and PubMedBERT fallback.",
+  "DrugBank is the primary and most important medication knowledge source behind drug information and interaction evidence.",
+  "Hybrid DDI analysis uses DrugBank/Neo4j as the core evidence layer, DDInter as a supplementary interaction dataset, and PubMedBERT as a fallback model.",
   "Patient-aware substitution filters and ranks safer alternatives for pharmacist review.",
   "Static digital twin compares current and substituted medication regimens with explainable reports.",
   "Prescription OCR converts handwritten medication information into structured fields."
@@ -222,7 +225,7 @@ export const projects: Project[] = [
     subtitle: "AI-Powered Medication Safety Platform",
     label: "A+ Graduation Project",
     summary:
-      "An end-to-end medication-safety platform combining drug-drug interaction analysis, patient-aware drug substitution, prescription OCR, patient-specific medication modeling, explainable safety reporting, web/mobile interfaces, and multiple medical data sources.",
+      "An end-to-end medication-safety platform anchored by DrugBank as the primary medication knowledge source, with DDInter as supplementary interaction evidence and PubMedBERT as a fallback model for unresolved interaction analysis.",
     capabilities: pharmasafeCapabilities,
     technologies: pharmasafeStack,
     metrics: pharmasafeMetrics,
@@ -231,6 +234,8 @@ export const projects: Project[] = [
     image: {
       src: "/assets/projects/pharmasafe/demo-screenshots/pharmasafe-medicine-safety-check.png",
       alt: "Genuine PharmaSafe Medicine Safety Check application screen.",
+      caption:
+        "Real PharmaSafe application screen for medication safety checking, backed by DrugBank-centered drug information and interaction evidence.",
       width: 1007,
       height: 817
     },
@@ -260,13 +265,22 @@ export const projects: Project[] = [
     number: "02",
     title: "Intelligent Malware Analysis Platform",
     subtitle: "Cloud malware-risk analysis",
+    label: "Huawei Cloud MENA Top 50",
     summary:
-      "Cloud-based malware-risk analysis combining static machine-learning analysis, dynamic sandbox behavior, and VirusTotal hash verification.",
+      "Cloud-based malware-risk analysis combining static machine-learning analysis, dynamic sandbox behavior, and VirusTotal hash verification. Achieved Top 50 in the Huawei Cloud MENA Competition.",
     technologies: ["EMBER2024", "XGBoost", "Huawei Cloud", "ECS", "OBS", "VPC", "Cloud Eye"],
     metrics: [
       { label: "AUC", value: "0.99" },
       { label: "Accuracy", value: "0.97" }
-    ]
+    ],
+    image: {
+      src: "/assets/projects/malware-analysis/intelligent-malware-analysis-architecture.png",
+      alt: "Real Intelligent Malware Analysis platform architecture diagram showing upload flow, Huawei Cloud services, static ML, dynamic sandbox analysis, VirusTotal, object storage, and logging.",
+      caption:
+        "Supplied architecture diagram for the Intelligent Malware Analysis platform, including Huawei Cloud infrastructure, static ML, sandbox analysis, VirusTotal verification, storage, and monitoring.",
+      width: 1328,
+      height: 852
+    }
   },
   {
     id: "rag-document-qa",
@@ -280,9 +294,11 @@ export const projects: Project[] = [
     repo: "https://github.com/Nova6565/Watsonx-PDF-RAG-Assistant",
     image: {
       src: "/assets/projects/rag/rag-document-qa-interface.png",
-      alt: "Genuine RAG document Q&A assistant interface.",
-      width: 1070,
-      height: 465
+      alt: "Real PDF RAG Q&A application screenshot showing PDF upload, an input query, and a grounded answer about LoRA.",
+      caption:
+        "Supplied RAG Document Q&A screenshot showing the PDF upload panel, query input, and answer panel for a LoRA paper.",
+      width: 601,
+      height: 416
     }
   },
   {
@@ -290,18 +306,56 @@ export const projects: Project[] = [
     number: "04",
     title: "Brain Tumor Detection System",
     subtitle: "MRI classifier",
+    label: "Best Project - Introduction to Artificial Intelligence",
     summary:
-      "MRI-based brain-tumor classifier using transfer learning and model evaluation on approximately 7,000 MRI images.",
+      "MRI-based brain-tumor classifier using transfer learning and model evaluation on approximately 7,000 MRI images. Awarded Best Project in the Introduction to Artificial Intelligence course.",
     technologies: ["PyTorch", "ResNet-18", "CNNs", "Transfer Learning", "Model Evaluation"],
     metrics: [
       { label: "Dataset", value: "≈7,000 MRI images" },
       { label: "Accuracy", value: "97%" }
     ],
-    repo: "https://github.com/Nova6565/Brain-Tumor-detection-"
+    repo: "https://github.com/Nova6565/Brain-Tumor-detection-",
+    image: {
+      src: "/assets/projects/brain-tumor/brain-tumor-detection-app.png",
+      alt: "Real Brain Tumor Detection Gradio application screenshot showing an MRI image classified as meningioma.",
+      caption:
+        "Supplied Brain Tumor Detection application screenshot with an MRI upload and meningioma prediction output.",
+      width: 628,
+      height: 810
+    }
+  },
+  {
+    id: "veggievision",
+    number: "05",
+    title: "VeggieVision",
+    subtitle: "AI-powered vegetable recognition, nutrition, and recipe assistant",
+    label: "Best Project - Advanced Artificial Intelligence",
+    summary:
+      "Mobile and Streamlit AI assistant for recognizing vegetables, generating nutrition cards from USDA data, and supporting recipe guidance with Groq-powered assistance. Awarded Best Project in the Advanced Artificial Intelligence course at AASTMT.",
+    technologies: [
+      "CNNs",
+      "EfficientNetB0",
+      "MobileNetV2",
+      "TFLite",
+      "Streamlit",
+      "Flutter",
+      "USDA data",
+      "Groq"
+    ],
+    metrics: [{ label: "Test accuracy", value: "99.9%" }],
+    repo: "https://github.com/Nova6565/VeggieVision",
+    image: {
+      src: "/assets/projects/veggievision/veggievision-mobile-app.png",
+      alt: "Real VeggieVision mobile application screenshots showing nutrition lookup, vegetable recognition, confidence, scanned vegetables, and recipe actions.",
+      caption:
+        "Supplied VeggieVision mobile app screenshots showing vegetable recognition, nutrition cards, scanned vegetables, and recipe actions.",
+      width: 615,
+      height: 685
+    }
   },
   {
     id: "disaster-damage",
-    number: "05",
+    number: "06",
     title: "Disaster Damage Assessment from Satellite Images",
     subtitle: "Pre/post satellite damage analysis",
     summary:
@@ -315,6 +369,8 @@ export const projects: Project[] = [
     image: {
       src: "/assets/projects/disaster-damage/prediction-composite.png",
       alt: "Genuine disaster damage prediction composite with pre/post imagery and probabilities.",
+      caption:
+        "Supplied disaster damage prediction composite showing pre/post satellite imagery, SAM2 overlay, classifier crops, predicted label, confidence, and probabilities.",
       width: 967,
       height: 650
     }

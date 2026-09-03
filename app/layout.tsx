@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { AmbientCursor } from "@/components/ui/AmbientCursor";
 import "./globals.css";
 
 const cormorant = localFont({
@@ -84,7 +85,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
-      <body>{children}</body>
+      <body>
+        <AmbientCursor />
+        {children}
+      </body>
     </html>
   );
 }

@@ -39,6 +39,8 @@ export const achievements = [
   "PharmaSafe — A+ Graduation Project",
   "Huawei Developer Competition Northern Africa 2025 — Top 50 among 389 teams and 1,400+ developers",
   "ECPC 2024 — Finalist",
-  "Four academic course project awards",
-  "Best Project — Introduction to Artificial Intelligence (Brain Tumor Detection)"
+  "Best Project — Introduction to Artificial Intelligence",
+  "Best Project — Advanced Artificial Intelligence",
+  "Best Project — Introduction to Cybersecurity",
+  "Best Project — Advanced Programming"
 ];

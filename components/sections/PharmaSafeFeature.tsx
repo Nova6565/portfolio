@@ -1,7 +1,10 @@
-import { ArrowUpRight, Github, PlayCircle } from "lucide-react";
+"use client";
+
+import { ArrowUpRight, Github, Maximize2, PlayCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
+import { MediaLightboxTrigger } from "@/components/ui/MediaLightbox";
 import { Metric } from "@/components/ui/Metric";
 import { TechTag } from "@/components/ui/TechTag";
 import { pharmasafeAppScreenshots, pharmasafeCapabilities, pharmasafeMetrics, pharmasafeStack, projects } from "@/data/projects";
@@ -24,18 +27,33 @@ export function PharmaSafeFeature() {
 
         <div className="grid gap-8 lg:grid-cols-[1.12fr_0.88fr]">
           <Reveal className="relative overflow-hidden rounded-sm border border-walnut/15 bg-espresso p-3 shadow-editorial">
-            <Image
-              src={pharmasafe.image!.src}
-              alt={pharmasafe.image!.alt}
-              width={pharmasafe.image!.width}
-              height={pharmasafe.image!.height}
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              className="aspect-[1.23/1] w-full rounded-sm object-contain"
-            />
-            <div className="absolute bottom-6 left-6 max-w-xs border border-ivory/15 bg-espresso/88 p-5 text-ivory backdrop-blur">
+            <MediaLightboxTrigger
+              media={{
+                title: "PharmaSafe Medicine Safety Check",
+                eyebrow: "Real app screen",
+                caption: pharmasafe.image!.caption,
+                image: pharmasafe.image!
+              }}
+              className="project-media-button group/media block w-full overflow-hidden rounded-sm"
+            >
+              <span className="relative block">
+                <Image
+                  src={pharmasafe.image!.src}
+                  alt={pharmasafe.image!.alt}
+                  width={pharmasafe.image!.width}
+                  height={pharmasafe.image!.height}
+                  sizes="(min-width: 1024px) 58vw, 100vw"
+                  className="project-media-image aspect-[1.23/1] w-full rounded-sm object-contain"
+                />
+                <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-espresso/88 text-ivory">
+                  <Maximize2 size={16} />
+                </span>
+              </span>
+            </MediaLightboxTrigger>
+            <div className="pointer-events-none absolute bottom-6 left-6 max-w-xs border border-ivory/15 bg-espresso/88 p-5 text-ivory backdrop-blur">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-brass">Real app screen</p>
               <p className="mt-2 text-sm leading-6 text-ivory/80">
-                Medicine safety check showing a high-risk interaction workflow inside the actual PharmaSafe application.
+                DrugBank is the core medication knowledge source behind PharmaSafe drug information and interaction evidence.
               </p>
             </div>
           </Reveal>
@@ -93,16 +111,25 @@ export function PharmaSafeFeature() {
 
             <Reveal className="grid grid-cols-3 gap-3">
               {pharmasafeAppScreenshots.slice(3, 6).map((screenshot) => (
-                <div key={screenshot.id} className="overflow-hidden rounded-sm border border-walnut/15 bg-parchment">
+                <MediaLightboxTrigger
+                  key={screenshot.id}
+                  media={{
+                    title: screenshot.title,
+                    eyebrow: screenshot.feature,
+                    caption: screenshot.description,
+                    image: screenshot
+                  }}
+                  className="project-media-button block overflow-hidden rounded-sm border border-walnut/15 bg-parchment"
+                >
                   <Image
                     src={screenshot.src}
                     alt={screenshot.alt}
                     width={screenshot.width}
                     height={screenshot.height}
                     sizes="(min-width: 1024px) 10vw, 28vw"
-                    className="aspect-[4/3] w-full object-cover object-top"
+                    className="project-media-image aspect-[4/3] w-full object-contain object-top"
                   />
-                </div>
+                </MediaLightboxTrigger>
               ))}
             </Reveal>
           </div>
